@@ -29,14 +29,15 @@ app.use(bodyParser.json());
 app.get('/api/mail', (req, res) => {
   var host = req.headers.host;
   var origin = req.headers.origin
+  console.log("req", req)
   console.log("req data", req.headers.host, req.headers.origin)
 
   if (host != "https://meetinventure.com/") {
     res.redirect('https://meetinventure.com/yikes.html');
   }
-
-  res.header("Access-Control-Allow-Origin", "https://meetinventure.com/");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  //
+  // res.header("Access-Control-Allow-Origin", "https://meetinventure.com/");
+  // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
   console.log("connected: req", req)
   console.log("req query", req.query)
@@ -45,7 +46,7 @@ app.get('/api/mail', (req, res) => {
     console.log("auto response to client succesfully sent");
   });
 
-  contact_information("malindu@teaminventure.com", req.query.email, req.query.name, req.query.message, function() {
+  contact_information("malindu@meetinventure.com", req.query.email, req.query.name, req.query.message, function() {
     console.log("mail succesfully sent to malindu");
     res.redirect('https://meetinventure.com/contact.html');
   });
