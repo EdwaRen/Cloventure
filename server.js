@@ -6,24 +6,9 @@ var contact_information = require('./lib/contact_information.js');
 var contact_register = require('./lib/contact_register.js')
 
 const bodyParser = require('body-parser');
-// const url = 'mongodb://159.203.42.253:27017'
 var router = express.Router();
 
-// var cors = require('cors')
-// var whitelist = ['https://meetinventure.com/', 'http://meetinventure.com/']
-// var corsOptions = {
-//   origin: function (origin, callback) {
-//     console.log("origin", origin)
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null, true)
-//     } else {
-//       callback(new Error('Not allowed by CORS'))
-//     }
-//   }
-// }
 var app = express()
-
-
 
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
@@ -48,15 +33,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.post('/', (req, res) => {
-
-    console.log("req", req.body)
-    console.log("req", req.body.form_response)
-    console.log("req 1", req.body.form_response.answers[1])
-    console.log("req 1 email", req.body.form_response.answers[1].email)
     contact_register(req.body.form_response.answers[1].email, function() {
       console.log(req.body.form_response.answers[1].email + " has successfully registered for inventure")
     })
-    // return a text response
     res.json(req.body.form_response.answers[1].email);
 });
 
@@ -65,19 +44,7 @@ app.post('/', (req, res) => {
 app.get('/api/mail', (req, res) => {
   var host = req.headers.host;
   var origin = req.headers.origin
-  // console.log("req", req)
-  console.log("req data", req.headers.host, req.headers.origin)
 
-  // if (host == "https://meetinventure.com/") {
-  //   console.log("not meetinventure")
-  //   res.redirect('https://meetinventure.com/yikes.html');
-  // }
-  //
-  // res.header("Access-Control-Allow-Origin", "https://meetinventure.com/");
-  // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-
-  console.log("req query", req.query)
-  console.log('req, specific data', req.query.email, req.query.email, req.query.name)
   contact_confirmation(req.query.email, function() {
     console.log("auto response to client succesfully sent");
   });
