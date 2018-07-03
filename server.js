@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var path = require('path');
 var contact_confirmation = require('./lib/contact_confirmation.js');
+var contact_information = require('./lib/contact_information.js');
 
 
 const bodyParser = require('body-parser');
@@ -27,8 +28,12 @@ app.use(bodyParser.json());
 
 app.get('/api/mail', (req, res) => {
   console.log("connected")
-  contact_confirmation("eddie.ren.2013@gmail.com", function() {
-    console.log("mail succesfully sent");
+  contact_confirmation(req.body.email, function() {
+    console.log("auto response to client succesfully sent");
+  });
+
+  contact_information("malindu@teaminventure.com", req.body.email, req.body.name, req.body.message, function() {
+    console.log("mail succesfully sent to malindu");
     res.redirect('/');
   });
 
