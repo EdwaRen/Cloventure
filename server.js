@@ -47,6 +47,28 @@ var logger = function(req, res, next) {
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+app.post('/', (req, res) => {
+    // check if verification token is correct
+    // if (req.query.token !== token) {
+    //     return res.sendStatus(401);
+    // }
+
+    // print request body
+    console.log(req.body);
+
+    // return a text response
+    const data = {
+        responses: [
+            {
+                type: 'text',
+                elements: ['Hi', 'Hello']
+            }
+        ]
+    };
+
+    res.json(data);
+});
+
 
 
 app.get('/api/mail', (req, res) => {
@@ -69,7 +91,7 @@ app.get('/api/mail', (req, res) => {
     console.log("auto response to client succesfully sent");
   });
 
-  contact_information("eddie.ren.2013@gmail.com", req.query.email, req.query.name, req.query.message, function() {
+  contact_information("malindu@meetinventure.com", req.query.email, req.query.name, req.query.message, function() {
     console.log("mail succesfully sent to malindu");
     res.redirect('https://meetinventure.com/contact.html');
   });
