@@ -9,23 +9,24 @@ const bodyParser = require('body-parser');
 // const url = 'mongodb://159.203.42.253:27017'
 var router = express.Router();
 
-var cors = require('cors')
-var whitelist = ['https://meetinventure.com']
-var corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
-    } else {
-      callback(new Error('Not allowed by CORS'))
-    }
-  }
-}
+// var cors = require('cors')
+// var whitelist = ['https://meetinventure.com/', 'http://meetinventure.com/']
+// var corsOptions = {
+//   origin: function (origin, callback) {
+//     console.log("origin", origin)
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('Not allowed by CORS'))
+//     }
+//   }
+// }
 var app = express()
 
 
 
 var allowCrossDomain = function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', 'https://meetinventure.com');
+    res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS');
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With');
 
@@ -48,16 +49,16 @@ app.use(bodyParser.json());
 
 
 
-app.get('/api/mail', cors(corsOptions), (req, res) => {
+app.get('/api/mail', (req, res) => {
   var host = req.headers.host;
   var origin = req.headers.origin
-  console.log("req", req)
+  // console.log("req", req)
   console.log("req data", req.headers.host, req.headers.origin)
 
-  if (host == "https://meetinventure.com/") {
-    console.log("not meetinventure")
-    res.redirect('https://meetinventure.com/yikes.html');
-  }
+  // if (host == "https://meetinventure.com/") {
+  //   console.log("not meetinventure")
+  //   res.redirect('https://meetinventure.com/yikes.html');
+  // }
   //
   // res.header("Access-Control-Allow-Origin", "https://meetinventure.com/");
   // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -79,7 +80,7 @@ app.use(logger);
 app.use(express.static(path.join(__dirname, 'build')));
 
 
-app.use(allowCrossDomain);
+// app.use(allowCrossDomain);
 
 
 app.listen(3000, function() {
