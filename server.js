@@ -13,10 +13,10 @@ var logger = function(req, res, next) {
   next();
 }
 app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', 'http://meetinventure.com');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    res.setHeader('Access-Control-Allow-Credentials', true);
+    // res.setHeader('Access-Control-Allow-Origin', 'http://meetinventure.com');
+    // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    // res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    // res.setHeader('Access-Control-Allow-Credentials', true);
     next();
 });
 
@@ -27,16 +27,27 @@ app.use(bodyParser.json());
 
 
 app.get('/api/mail', (req, res) => {
+  var host = req.headers.host;
+  var origin = req.headers.origin
+  console.log("req data", req.headers.host, req.headers.origin)
+
+  if (host != "https://meetinventure.com/") {
+    res.redirect('https://meetinventure.com/yikes.html');
+  }
+
+  res.header("Access-Control-Allow-Origin", "https://meetinventure.com/");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
   console.log("connected: req", req)
-  console.log("req data", req.body)
-  console.log('req, specific data', req.body.email, req.body.email, req.body.name)
-  contact_confirmation(req.body.email, function() {
+  console.log("req query", req.query)
+  console.log('req, specific data', req.query.email, req.query.email, req.query.name)
+  contact_confirmation(req.query.email, function() {
     console.log("auto response to client succesfully sent");
   });
 
-  contact_information("malindu@teaminventure.com", req.body.email, req.body.name, req.body.message, function() {
+  contact_information("malindu@teaminventure.com", req.query.email, req.query.name, req.query.message, function() {
     console.log("mail succesfully sent to malindu");
-    res.redirect('/');
+    res.redirect('https://meetinventure.com/contact.html');
   });
 
 });
