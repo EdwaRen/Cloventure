@@ -28,7 +28,8 @@ app.use(bodyParser.json());
 app.get('/api/mail', (req, res) => {
   console.log("connected")
   contact_confirmation("eddie.ren.2013@gmail.com", function() {
-    console.log("mail succesfully sent")
+    console.log("mail succesfully sent");
+    res.redirect('/');
   });
 
 });
