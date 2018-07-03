@@ -54,7 +54,8 @@ app.post('/', (req, res) => {
     // }
 
     // print request body
-    console.log(req.body);
+    console.log("req", req)
+    console.log("req query", req.query);
 
     // return a text response
     const data = {
