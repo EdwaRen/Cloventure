@@ -54,9 +54,10 @@ app.post('/', (req, res) => {
     // }
 
     // print request body
-    console.log("req", req.body.answers)
-    console.log("req 1", req.body.answers[1])
-    console.log("req 1 email", req.body.answers[1].email)
+    console.log("req", req.body)
+    console.log("req", req.body.form_response)
+    console.log("req 1", req.body.form_response.answers[1])
+    console.log("req 1 email", req.body.form_response.answers[1].email)
 
     console.log("req query", req.query);
 
