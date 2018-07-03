@@ -27,7 +27,9 @@ app.use(bodyParser.json());
 
 
 app.get('/api/mail', (req, res) => {
-  console.log("connected")
+  console.log("connected: req", req)
+  console.log("req data", req.body)
+  console.log('req, specific data', req.body.email, req.body.email, req.body.name)
   contact_confirmation(req.body.email, function() {
     console.log("auto response to client succesfully sent");
   });
