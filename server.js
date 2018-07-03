@@ -3,7 +3,7 @@ var app = express();
 var path = require('path');
 var contact_confirmation = require('./lib/contact_confirmation.js');
 var contact_information = require('./lib/contact_information.js');
-
+var contact_register = require('./lib/contact_register.js')
 
 const bodyParser = require('body-parser');
 // const url = 'mongodb://159.203.42.253:27017'
@@ -48,30 +48,16 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.post('/', (req, res) => {
-    // check if verification token is correct
-    // if (req.query.token !== token) {
-    //     return res.sendStatus(401);
-    // }
 
-    // print request body
     console.log("req", req.body)
     console.log("req", req.body.form_response)
     console.log("req 1", req.body.form_response.answers[1])
     console.log("req 1 email", req.body.form_response.answers[1].email)
-
-    console.log("req query", req.query);
-
+    contact_register(req.body.form_response.answers[1].email, function() {
+      console.log(req.body.form_response.answers[1].email + " has successfully registered for inventure")
+    })
     // return a text response
-    const data = {
-        responses: [
-            {
-                type: 'text',
-                elements: ['Hi', 'Hello']
-            }
-        ]
-    };
-
-    res.json(data);
+    res.json(req.body.form_response.answers[1].email);
 });
 
 
