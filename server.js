@@ -32,7 +32,7 @@ var logger = function(req, res, next) {
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.post('/', (req, res) => {
+app.post('/hook', (req, res) => {
     contact_register(req.body.form_response.answers[1].email, function() {
       console.log(req.body.form_response.answers[1].email + " has successfully registered for inventure")
     })
