@@ -4,8 +4,11 @@ var path = require('path');
 var contact_confirmation = require('./lib/contact_confirmation.js');
 var contact_information = require('./lib/contact_information.js');
 var contact_register = require('./lib/contact_register.js')
+var mailchimp = require('./lib/mailchimp.js')
 
 const bodyParser = require('body-parser');
+
+
 var router = express.Router();
 
 var app = express()
@@ -51,8 +54,16 @@ app.get('/api/mail', (req, res) => {
 
   contact_information("malindu@meetinventure.com", req.query.email, req.query.name, req.query.message, function() {
     console.log("mail succesfully sent to malindu");
-    res.redirect('https://meetinventure.com/contact.html');
   });
+
+  mailchimp(req.query.email, function(err) {
+    if (err !== null) {
+      console.log("error, not added to mailing list")
+    }
+    console.log("mail succesfully sent to mailchimp", req.query.email);
+  })
+  res.redirect('https://meetinventure.com/contact.html');
+
 
 });
 
