@@ -36,8 +36,9 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.post('/hook', (req, res) => {
-    console.log("req stuff", req)
     console.log("req body:")
+    var datetime = new Date();
+    console.log(datetime);
     console.log(util.inspect(req.body, false, null))
 
     contact_register(req.body.form_response.answers[1].email, function() {
