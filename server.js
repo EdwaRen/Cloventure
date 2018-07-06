@@ -7,7 +7,7 @@ var contact_register = require('./lib/contact_register.js')
 var mailchimp = require('./lib/mailchimp.js')
 
 const bodyParser = require('body-parser');
-
+const util = require('util')
 
 var router = express.Router();
 
@@ -37,7 +37,8 @@ app.use(bodyParser.json());
 
 app.post('/hook', (req, res) => {
     console.log("req stuff", req)
-    console.log(JSON.stringify("req stuff", req.body))
+    console.log("req body:")
+    console.log(util.inspect(req.body, false, null))
 
     contact_register(req.body.form_response.answers[1].email, function() {
       console.log(req.body.form_response.answers[1].email + " has successfully registered for inventure")
