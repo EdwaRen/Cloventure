@@ -39,6 +39,14 @@ app.post('/hook', (req, res) => {
     contact_register(req.body.form_response.answers[1].email, function() {
       console.log(req.body.form_response.answers[1].email + " has successfully registered for inventure")
     })
+
+    mailchimp(req.body.form_response.answers[1].email, function(err) {
+      if (err !== null) {
+        console.log("error, not added to mailing list")
+      }
+      console.log("mail succesfully sent to mailchimp", req.body.form_response.answers[1].email);
+    })
+
     res.json(req.body.form_response.answers[1].email);
 });
 
@@ -56,12 +64,6 @@ app.get('/api/mail', (req, res) => {
     console.log("mail succesfully sent to malindu");
   });
 
-  mailchimp(req.query.email, function(err) {
-    if (err !== null) {
-      console.log("error, not added to mailing list")
-    }
-    console.log("mail succesfully sent to mailchimp", req.query.email);
-  })
   res.redirect('https://meetinventure.com/contact.html');
 
 
