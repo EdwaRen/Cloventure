@@ -36,8 +36,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.post('/hook', (req, res) => {
-    print("req stuff", req)
-    print("req stuff", req.body)
+    console.log("req stuff", req)
+    console.log("req stuff", req.body)
 
     contact_register(req.body.form_response.answers[1].email, function() {
       console.log(req.body.form_response.answers[1].email + " has successfully registered for inventure")
