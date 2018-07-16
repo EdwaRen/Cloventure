@@ -41,7 +41,7 @@ app.post('/hook', (req, res) => {
   console.log("req body:")
   var datetime = new Date();
   console.log(datetime);
-  console.log(util.inspect(req.body, false, null))
+  // console.log(util.inspect(req.body, false, null))
 
   contact_register(req.body.form_response.answers[1].email, function() {
     console.log(req.body.form_response.answers[1].email +
@@ -64,15 +64,25 @@ app.post('/hook', (req, res) => {
 app.get('/api/mail', (req, res) => {
   var host = req.headers.host;
   var origin = req.headers.origin
+  console.log("req query", req.query)
 
   contact_confirmation(req.query.email, function() {
     console.log("auto response to client succesfully sent");
 
-    contact_information("eddie@meetinventure.com", req.query.email, req
-      .query.name, req.query.message,
+    contact_information("eddie.ren.2013@gmail.com", req.query.email,
+      req.query.name, req.query.message,
       function() {
-        console.log("mail succesfully sent to malindu");
+        console.log("mail succesfully sent to eddie");
+
+        contact_information("malindu@meetinventure.com", req.query.email,
+          req.query.name, req.query.message,
+          function() {
+            console.log("mail succesfully sent to malindu");
+          });
       });
+
+
+
   });
 
 
